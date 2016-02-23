@@ -567,6 +567,9 @@ Ccm.prototype.startAll = function (nodeLength, options, callback) {
     },
     function (next) {
       var start = ['start', '--wait-for-binary-proto'];
+      if (process.platform.indexOf('win') === 0 && helper.isCassandraGreaterThan('2.2.4')) {
+        start.push('--quiet-windows')
+      }
       if (util.isArray(options.jvmArgs)) {
         options.jvmArgs.forEach(function (arg) {
           start.push('--jvm_arg', arg);
@@ -593,8 +596,8 @@ Ccm.prototype.spawn = function (processName, params, callback) {
   var originalProcessName = processName;
   var spawn = require('child_process').spawn;
   if (process.platform.indexOf('win') === 0) {
-    params = ['/c', processName].concat(params);
-    processName = 'cmd.exe';
+    params = ['-ExecutionPolicy', 'Unrestricted', processName].concat(params);
+    processName = 'powershell.exe';
   }
   var p = spawn(processName, params);
   var stdoutArray= [];
