@@ -547,6 +547,7 @@ Ccm.prototype.startAll = function (nodeLength, options, callback) {
       if (!options.yaml) {
         return next();
       }
+      helper.trace('With conf', options.yaml);
       var i = 0;
       async.whilst(
         function condition() {
@@ -572,7 +573,9 @@ Ccm.prototype.startAll = function (nodeLength, options, callback) {
       }
       if (util.isArray(options.jvmArgs)) {
         options.jvmArgs.forEach(function (arg) {
-          start.push('--jvm_arg', arg);
+          // Windows requires jvm arguments to be quoted, while *nix requires unquoted.
+          var jvmArg = process.platform.indexOf('win') === 0 ? '"' + arg + '"' : arg;
+          start.push('--jvm_arg', jvmArg);
         }, this);
         helper.trace('With jvm args', options.jvmArgs);
       }

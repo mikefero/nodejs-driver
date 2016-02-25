@@ -77,7 +77,7 @@ describe('Client', function () {
   describe('#getReplicas() with ByteOrderPartitioner', function () {
     var ccmOptions = {
       vnodes: true,
-      yaml: ['partitioner: org.apache.cassandra.dht.ByteOrderedPartitioner']
+      yaml: ['partitioner:org.apache.cassandra.dht.ByteOrderedPartitioner']
     };
     before(helper.ccmHelper.start('2', ccmOptions));
     after(helper.ccmHelper.remove);
@@ -105,7 +105,7 @@ describe('Client', function () {
   describe('#getReplicas() with RandomPartitioner', function () {
     var ccmOptions = {
       vnodes: true,
-      yaml: ['partitioner: org.apache.cassandra.dht.RandomPartitioner']
+      yaml: ['partitioner:org.apache.cassandra.dht.RandomPartitioner']
     };
     before(helper.ccmHelper.start('2', ccmOptions));
     after(helper.ccmHelper.remove);
